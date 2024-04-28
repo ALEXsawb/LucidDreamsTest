@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  app:
+    build: "."
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/code"
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'PASSWORD'
+      MYSQL_ROOT_PASSWORD: 'PASSWORD'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
